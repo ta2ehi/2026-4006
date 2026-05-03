@@ -197,7 +197,7 @@ namespace pr
         }
     };
 
-    auto maoh_okuyucu() -> pr::havuzlar
+    inline auto maoh_okuyucu() -> pr::havuzlar
     {
         std::ifstream dosya("havuzlar.maoh");
         if (!dosya.is_open()) return pr::havuzlar(1);
