@@ -43,11 +43,15 @@ MAOH.END-OF-FILE:
 ```
 gibi.
 
-## MANTIK
+_.moah dosya formatının son kararlı sürümü 3.0 sürümüdür._
+
+## Mantık
 Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle getirilmesidir. Bunun için iki farklı yöntem aynı anda uygulanır.
 
-1. **Flashcards Yöntemi:** Genellikle ezber yapmakta kullanılan bu yöntemin uyarlanmış bir versiyonunu projemizde kullanıyoruz. Orijinal yöntemde bir kartın bir yüzüne soru, diğer yüzüne de doğru cevap yazılır ve kartlar üst üste dizilir. Daha sonra sırayla kartlardaki sorular okunarak doğru cevap hatırlanmaya çalışılır. Doğru cevap verilirse kart bir üst desteye alınır, yanlış cevap verilirse ise kart bir alt desteye alınır. Bu şekilde 5 kart destesi oluşturulur ve bu desteler sırasıyla 1, 2, 4, 7 ve 14 günde bir tekrar edilir. Bu şekilde, çok yanlış yapılan kartların sık tekrar edilerek öğrenilmesi amaçlanır.
+**_1. Flashcards Yöntemi:_** Genellikle ezber yapmakta kullanılan bu yöntemin uyarlanmış bir versiyonunu projemizde kullanıyoruz. Orijinal yöntemde bir kartın bir yüzüne soru, diğer yüzüne de doğru cevap yazılır ve kartlar üst üste dizilir. Daha sonra sırayla kartlardaki sorular okunarak doğru cevap hatırlanmaya çalışılır. Doğru cevap verilirse kart bir üst desteye alınır, yanlış cevap verilirse ise kart bir alt desteye alınır. Bu şekilde 5 kart destesi oluşturulur ve bu desteler sırasıyla 1, 2, 4, 7 ve 14 günde bir tekrar edilir. Bu şekilde, çok yanlış yapılan kartların sık tekrar edilerek öğrenilmesi amaçlanır.
 
   Bu projede matematik konuları, birer kart gibi düşünülmüş olup kullanıcının tercihi kadar havuza ayrılır. Kullanıcıya soru sorulacağı zaman havuzlar için kullanıcının belirlediği yüzdelikler üzerinden ağırlıklandırılmış olarak rastgele bir konu seçilir. Örneğin 5 havuzun sırasıyla %50, %25, %12, %8 ve %5 oranlarında ağırlıklandırıldığı varsayılan senaryoda kullanıcıya sorulacak soru için belirlenen rastgelelik; %50 ihtimalle 1. havuz, %25 ihtimalle 2. havuz, ... şeklinde olur. Konu hakkında sorulan sorular belli oranda doğru yanıtlanamazsa bu konu bir alt havuza aktarılır, soruların tamamı doğru yanıtlanırsa da konu bir üst havuza aktarılır. Herhangi bir havuzda hiç konu kalmaması durumunda yüzdlikler yeni havuz sayısı için yeniden dağıtılır.
 
-2. **Adaptif Öğrenme:** 
+**_2. Adaptif Öğrenme:_** Uygulamada yer alan her soru için 1-5 arasında (1: Çok kolay, 2: Kolay, 3: Orta, 4: Zor, 5: Çok zor) birer zorluk seviyesi belirlenmiştir. Kullanıcı soruları çözdükçe her konu için bir puanı oluşur. Doğru çözülen sorular puanı artırır, yanlış çözülen sorular ise azaltır. Yeni soruların zorluk seviyesi, puana göre belirlenir. Puanı yüksek olan konulardan sorulacak soruların zorluk seviyeleri daha yüksek olacaktır. Böylelikle kullanıcının zayıf olduğu konularda kolay sorular ile konunun öğrenilmesi sağlanacak, kullanıcının güçlü olduğu konularda ise zor sorular ile mükemmelleşme hedeflenecektir.
+
+_Not: Adaptif öğrenme kısmı henüz taslak aşamasındadır. İlerleyen sürümlerde puanların maoh dosyasına kaydedilmesi ve hesaplanması için kullanılacak kodlar programa dâhil edilecektir._
