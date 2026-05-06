@@ -11,11 +11,15 @@ Bu dosyada `"inline auto maoh_okuyucu() -> pr::havuzlar"` olarak tanımlanan dos
 
 `.maoh`, bu projede tüm havuz, konu ve soru verilerinin depolandığı dosya tipidir. Dosyanın başında başlatma etiketi ve dosya sürümü yer alır: 
 ```
-MAOH.START-OF-FILE:3.0
+MAOH.START-OF-FILE:3.1
 ```
 Daha sonra ayarlanmış havuz sayısı gelir:
 ```
-HAVUZ-SAYISI:5
+HAVUZ-SAYISI: 5
+```
+Daha sonra havuzlar ıçın belirlenmiş oranları gelir:
+```
+HAVUZ-ORANLARI: 0.5 0.25 0.12 0.08 0.05
 ```
 Daha sonra havuzlar tek tek eklenir. Her havuzun başında havuz numarası etiketi `HAVUZ:3` (3 numarası örnektir) bulunur ve alt satıra geçirir. Havuzların altındaki konular için konunun başında konu ismi etiketi `KONU:ASAL_AA_SAYILAR` (ASAL_AA_SAYILAR konu ismi örnektir) etiketi kullanılır ve alt satıra geçilir. Konuların altında ise sorular yer alır. Her soru bir satırı kaplar ve `SORU:` etiketiyle başlar. Etiketten sonra bir boşluk bırakılır ve aralarında bir boşluk olacak şekilde ve sırasıyla şu elemanlar yazılır: Soru konumu, doğru yanıt, A - E şıkları için sırayla ve aralarında bir boşluk bırakılarak çeldirici türleri (enum rakamları ile), soru zorluk seviyesi. Son olarak dosya sonu etiketi gelir:
 ```
@@ -24,8 +28,9 @@ MAOH.END-OF-FILE:
 
 Örnek dosya:
 ```
-MAOH.START-OF-FILE:3.0
-HAVUZ-SAYISI:5
+MAOH.START-OF-FILE:3.1
+HAVUZ-SAYISI: 5
+HAVUZ-ORANLARI: 0.5 0.25 0.12 0.08 0.05
 HAVUZ:1
 KONU:ASAL_AA_SAYILAR
 SORU: OGM_TYT_MAT_2025_TEST2_SORU1 D 2 4 1 0 8 2
@@ -43,7 +48,7 @@ MAOH.END-OF-FILE:
 ```
 gibi.
 
-_.moah dosya formatının son kararlı sürümü 3.0 sürümüdür._
+_.moah dosya formatının son kararlı sürümü 3.1 sürümüdür._
 
 ## Mantık
 Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle getirilmesidir. Bunun için iki farklı yöntem aynı anda uygulanır.
