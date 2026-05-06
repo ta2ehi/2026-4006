@@ -5,8 +5,6 @@
 
 Bu header dosyası, ana dosyada kullanılan yapıları oluşturmak için yazılmıştır. Tüm `enum`, `class` ve fonksiyon yapıları; `namespace pr` içine yerleştirilmiştir. Bu dosya yazılırken `C++20` standartları ile C++'a eklenen modern yöntemler kullanılmıştır. Bu sebeple dosyayı `C++20` veya daha yeni C++ standartları kullanarak derlediğinizden emin olunuz.
 
-Bu dosyada `"inline auto maoh_okuyucu() -> pr::havuzlar"` olarak tanımlanan dosya okuma fonksiyonunun, genel kabul ve prensiplere uygun olmasa da namespace pr içinde tanımlanan `class` yapılarıyla senkronize ve bağlı çalıştığından header dosyası içinde inline olarak tanımlanması ve ana dosyaya alınmaması uygun görülmüştür.
-
 ## **.maoh Dosya Formatı**
 
 `.maoh`, bu projede tüm havuz, konu ve soru verilerinin depolandığı dosya tipidir. Dosyanın başında başlatma etiketi ve dosya sürümü yer alır: 
