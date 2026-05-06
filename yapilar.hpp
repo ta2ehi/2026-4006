@@ -12,6 +12,9 @@ namespace pr
 {
     class soru;
 
+    auto havuz_orani_belirle(const int& havuz_sayisi) -> std::map<int, double>;
+    auto oranlari_dosyaya_yaz(const std::map<int, double>& oranlar, std::ofstream& dosya) -> bool;
+
     enum celdiriciler 
     { 
         DOGRU = 0, 
@@ -38,11 +41,9 @@ namespace pr
         std::map<pr::secenekler, pr::celdiriciler> celdiriciler_map;
         int zorluk;
 
-    public:
-        soru(const std::string& soru_konumu_, const pr::secenekler& dogru_cevap_,
-             const std::map<pr::secenekler, pr::celdiriciler>& celdiriciler_map_, const int& zorluk_)
-            : soru_konumu(soru_konumu_), dogru_cevap(dogru_cevap_),
-              celdiriciler_map(celdiriciler_map_), zorluk(zorluk_) {}
+        public:
+        soru(const std::string& soru_konumu_, const pr::secenekler& dogru_cevap_, const std::map<pr::secenekler, pr::celdiriciler>& celdiriciler_map_, const int& zorluk_)
+            : soru_konumu(soru_konumu_), dogru_cevap(dogru_cevap_), celdiriciler_map(celdiriciler_map_), zorluk(zorluk_) {}
 
         bool operator<(const soru& diger) const
         {
@@ -59,7 +60,7 @@ namespace pr
             return celdiriciler_map.at(cvp);
         }
 
-        void dosyaya_yazdir(std::ofstream& dosya) const
+        void dosyaya_yazdir(std::ofstream& dosya)
         {
             dosya << "SORU: " << soru_konumu << " " << dogru_cevap << " ";
             for (auto [secenek, celd] : celdiriciler_map)
@@ -75,7 +76,7 @@ namespace pr
         std::string konu_ismi;
         std::set<pr::soru> sorular;
 
-    public:
+        public:
         konu(const std::string& konu_ismi_) : konu_ismi(konu_ismi_) {}
         konu(const std::string& konu_ismi_, const std::set<pr::soru>& sorular_) : konu_ismi(konu_ismi_), sorular(sorular_) {}
 
@@ -106,7 +107,7 @@ namespace pr
 
         bool operator== (const pr::konu& diger) const
         {
-            return this->konu_ismi == diger.konu_ismi;
+            return this -> konu_ismi == diger.konu_ismi;
         }
     };
 
@@ -116,14 +117,24 @@ namespace pr
     {
         std::map<int, havuz_tipi> havuz_map;
         int havuz_sayisi;
+        std::map<int, double> oranlar;
+        bool okuma = true;
 
-    public:
+        public:
         havuzlar(const int& havuz_sayisi_) : havuz_sayisi(havuz_sayisi_)
         {
             for (int i = 0; i < havuz_sayisi; ++i)
             {
                 havuz_map.insert({i + 1, {}});
             }
+        }
+
+        havuzlar(const bool& okuma_) : okuma(okuma_) {}
+
+        void havuz_sayisi_tanimla(const int& havuz_say)
+        {
+            havuz_sayisi = havuz_say;
+            oranlar = havuz_orani_belirle(havuz_say);
         }
 
         void konu_ekle(const pr::konu& k, const int& h)
@@ -167,40 +178,49 @@ namespace pr
                 }
             }
 
-            if ((yukari_mi && bulunan_havuz == havuz_sayisi) ||
-                (!yukari_mi && bulunan_havuz == 1) ||
-                bulunan_havuz == -1)
-                return;
+            if ((yukari_mi && bulunan_havuz == havuz_sayisi) || (!yukari_mi && bulunan_havuz == 1) || bulunan_havuz == -1) return;
 
             havuz_map.at(yukari_mi ? bulunan_havuz + 1 : bulunan_havuz - 1).insert(k);
         }
 
         auto dosyaya_yaz() -> bool
         {
-            std::ofstream dosya("havuzlar.maoh");
+            auto dosya = std::ofstream{"havuzlar.maoh", std::ios::out | std::ios::trunc};
             if (!dosya.is_open()) return false;
 
-            dosya << "MAOH.START-OF-FILE:3.0\n";
-            dosya << "HAVUZ-SAYISI: " << havuz_sayisi << "\n";
+            dosya << "MAOH.START-OF-FILE:3.1" << std::endl;
+            dosya << "HAVUZ-SAYISI: " << havuz_sayisi << std::endl;
+            dosya << "HAVUZ-ORANLARI: ";
+            oranlari_dosyaya_yaz(oranlar, dosya);
 
             for (auto& [havuz_no, konular] : havuz_map)
             {
-                dosya << "HAVUZ: " << havuz_no << "\n";
+                dosya << "HAVUZ: " << havuz_no << std::endl;
                 for (auto& konu : konular)
                 {
                     konu.dosyaya_yazdir(dosya);
                 }
             }
 
-            dosya << "MOAH.END-OF-FILE:\n";
+            dosya << "MAOH.END-OF-FILE:" << std::endl;
             return true;
+        }
+
+        bool operator== (const havuzlar& diger) const
+        {
+            return this -> havuz_map == diger.havuz_map;
+        }
+
+        auto maoh_okuma_basarisi() -> bool
+        {
+            return okuma;
         }
     };
 
     inline auto maoh_okuyucu() -> pr::havuzlar
     {
-        std::ifstream dosya("havuzlar.maoh");
-        if (!dosya.is_open()) return pr::havuzlar(1);
+        auto dosya = std::ifstream{"havuzlar.maoh", std::ios::in};
+        if (!dosya.is_open()) return pr::havuzlar(false);
 
         std::string token;
 
@@ -210,14 +230,24 @@ namespace pr
         int aktif_havuz = -1;
         std::string aktif_konu_ismi;
 
+        std::map<int, double> oranlar_map;
+
         while (dosya >> token)
         {
             if (token == "MAOH.START-OF-FILE:3.0") continue;
-            if (token == "MOAH.END-OF-FILE:") break;
+            if (token == "MAOH.END-OF-FILE:") break;
 
             else if (token == "HAVUZ-SAYISI:")
             {
                 dosya >> havuz_sayisi;
+            }
+
+            else if (token == "HAVUZ-ORANLARI:") 
+            {
+                for (int i = 0; i < havuz_sayisi; ++i)
+                {
+                    dosya >> oranlar_map[i];
+                }
             }
 
             else if (token == "HAVUZ:")
@@ -274,6 +304,38 @@ namespace pr
         }
 
         return sonuc;
+    }
+
+    auto havuz_orani_belirle(const int& havuz_sayisi) -> std::map<int, double>
+    {
+        if (havuz_sayisi < 1 || havuz_sayisi > 6) return {};
+        switch (havuz_sayisi)
+        {
+            case 1:
+                return {{1, 1}};
+            case 2:
+                return {{1, 0.75}, {2, 0.25}};
+            case 3:
+                return {{1, 0.6}, {2, 0.25}, {3, 0.15}};
+            case 4:
+                return {{1, 0.5}, {2, 0.25}, {3, 0.16}, {4, 0.9}};
+            case 5:
+                return {{1, 0.5}, {2, 0.25}, {3, 0.12}, {4, 0.08}, {5, 0.05}};
+            case 6:
+                return {{1, 0.5}, {2, 0.25}, {3, 0.1}, {4, 0.07}, {5, 0.05}, {6, 0.03}};
+        };
+        return {};
+    }
+
+    auto oranlari_dosyaya_yaz(const std::map<int, double>& oranlar, std::ofstream& dosya) -> bool
+    {
+        if (!dosya.is_open()) return false;
+        for (auto [havuz_no, oran] : oranlar)
+        {
+            dosya << oran << " ";
+        }
+        dosya << std::endl;
+        return true;
     }
 
 }
