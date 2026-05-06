@@ -14,4 +14,6 @@ Versiyon 2.0: Ayrı soru, konu ve havuz mantıkları.
 
 Versiyon 3.0: Soru, konu ve havuz dosyalarının birleştirilmesi ve aralarında hiyerarşi oluşturulması.
 
-Versiyon 3.1 (Geliştirme aşamasında): Konu puan sistemi ve soru zorluk analizlerinin dosyaya eklenmesi.
+Versiyon 3.1: Havuz oranlarının dosya sistemine eklenmesi.
+
+Versiyon 3.2 (Geliştirme aşamasında): Konu puan sistemi ve soru zorluk analizlerinin dosyaya eklenmesi.
