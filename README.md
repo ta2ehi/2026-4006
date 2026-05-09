@@ -46,7 +46,7 @@ MAOH.END-OF-FILE:
 ```
 gibi.
 
-_.moah dosya formatının son kararlı sürümü 3.1 sürümüdür._
+_.moah dosya formatının son kararlı sürümü 3.2 sürümüdür._
 
 ## Mantık
 Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle getirilmesidir. Bunun için iki farklı yöntem aynı anda uygulanır.
