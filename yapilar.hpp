@@ -89,7 +89,7 @@ namespace pr
             secildi_mi = true;
         }
 
-        void soru_konumunu_goster() -> std::string
+        auto soru_konumunu_goster() -> std::string
         {
             return soru_konumu;
         }
@@ -110,7 +110,7 @@ namespace pr
         konu() {}
         konu(const std::string& konu_ismi_) : konu_ismi(konu_ismi_) {}
         konu(const std::string& konu_ismi_, const std::set<soru>& sorular_) : konu_ismi(konu_ismi_), sorular(sorular_) {}
-        konu(const std::String& konu_ismi_, const double konu_puani_) : konu_ismi(konu_ismi_), konu_puani(konu_puani_) {}
+        konu(const std::string& konu_ismi_, const double konu_puani_) : konu_ismi(konu_ismi_), konu_puani(konu_puani_) {}
 
         void soru_ekle(const pr::soru& s)
         {
@@ -277,7 +277,7 @@ namespace pr
             return rastgele_konu().rastgele_soru();
         }
 
-        auto rastgele_konu() -> konu
+        auto rastgele_konu() const -> konu
         {
             int rand_100 = rand() % 101;
             int toplam = 0;
@@ -303,6 +303,7 @@ namespace pr
                     return k;
                 }
             }
+            return konu();
         }
 
         bool operator== (const havuzlar& diger) const
@@ -460,6 +461,6 @@ namespace pr
         {
             verilen_sorular.insert({i + 1, soru_konusu.rastgele_soru()});
         }
-        return {koru_konusu, verilen_sorular};
+        return {soru_konusu, verilen_sorular};
     }
 }

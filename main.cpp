@@ -10,7 +10,7 @@ int main()
     using namespace pr;
     std::srand(time(0));
     std::cout << "ADAPTIF MATEMATIK OGRENME UYGULAMASINA HOS GELDINIZ!" << std::endl;
-    std::cout << "Proje hakkinda detaylar icin proje GitHub sayfasina bakabilirsiniz: "
+    std::cout << "Proje hakkinda detaylar icin proje GitHub sayfasina bakabilirsiniz: ta2ehi/2026-4006" << std::endl;
     auto okuma = maoh_okuyucu();
     if (!okuma.maoh_okuma_basarisi()) // Baslangic ayarlari
     {
@@ -46,9 +46,11 @@ int main()
     for (auto [soru_sira_no, secilen_soru] : sorular.second)
     {
         std::cout << ++i << ". SORU KONUMU: " << secilen_soru.soru_konumunu_goster() << std::endl;
+        char c;
         std::cout << "Cevap giriniz (Secenekler icin A-E harflerini, bos birakmak icin X harfini kullaniniz.): ";
-        std::cin >> sec;
-        bool dogru_mu = secilen_soru.dogru_mu(sec);
+        std::cin >> c;
+        sec = static_cast<secenekler>(c);
+        bool dogru_mu = secilen_soru.cevap_dogru_mu(sec);
         if (dogru_mu)
         {
             std::cout << "Tebrikler! Soruya dogru cevap verdiniz." << std::endl;
