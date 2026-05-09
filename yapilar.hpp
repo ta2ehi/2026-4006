@@ -109,7 +109,8 @@ namespace pr
         public:
         konu() {}
         konu(const std::string& konu_ismi_) : konu_ismi(konu_ismi_) {}
-        konu(const std::string& konu_ismi_, const std::set<pr::soru>& sorular_) : konu_ismi(konu_ismi_), sorular(sorular_) {}
+        konu(const std::string& konu_ismi_, const std::set<soru>& sorular_) : konu_ismi(konu_ismi_), sorular(sorular_) {}
+        konu(const std::String& konu_ismi_, const double konu_puani_) : konu_ismi(konu_ismi_), konu_puani(konu_puani_) {}
 
         void soru_ekle(const pr::soru& s)
         {
@@ -124,7 +125,7 @@ namespace pr
 
         void dosyaya_yazdir(std::ofstream& dosya) const
         {
-            dosya << "KONU: " << konu_ismi << std::endl;
+            dosya << "KONU: " << konu_ismi << " " << konu_puani << std::endl;
             for (auto soru : sorular)
             {
                 soru.dosyaya_yazdir(dosya);
@@ -253,7 +254,7 @@ namespace pr
             auto dosya = std::ofstream{"havuzlar.maoh", std::ios::out | std::ios::trunc};
             if (!dosya.is_open()) return false;
 
-            dosya << "MAOH.START-OF-FILE:3.2" << std::endl;
+            dosya << "MAOH.START-OF-FILE:3.3" << std::endl;
             dosya << "HAVUZ-SAYISI: " << havuz_sayisi << std::endl;
             dosya << "HAVUZ-ORANLARI: ";
             oranlari_dosyaya_yaz(oranlar, dosya);
@@ -345,7 +346,7 @@ namespace pr
 
         while (dosya >> token)
         {
-            if (token == "MAOH.START-OF-FILE:3.2") continue;
+            if (token == "MAOH.START-OF-FILE:3.3") continue;
             if (token == "MAOH.END-OF-FILE:") break;
 
             else if (token == "HAVUZ-SAYISI:")
@@ -369,8 +370,9 @@ namespace pr
 
             else if (token == "KONU:")
             {
-                dosya >> aktif_konu_ismi;
-                temp_map[aktif_havuz].insert(pr::konu(aktif_konu_ismi));
+                double konu_puani;
+                dosya >> aktif_konu_ismi >> konu_puani;
+                temp_map[aktif_havuz].insert(pr::konu(aktif_konu_ismi, konu_puani));
             }
 
             else if (token == "SORU:")
