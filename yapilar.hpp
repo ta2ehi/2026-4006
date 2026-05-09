@@ -7,6 +7,9 @@
 #include <fstream>
 #include <algorithm>
 #include <cstdlib>
+#include <iterator>
+#include <utility>
+#include <cmath>
 
 namespace pr
 {
@@ -36,14 +39,20 @@ namespace pr
 
     class soru
     {
+        int yanlis_yapilma_sayisi = 0;
         std::string soru_konumu;
         pr::secenekler dogru_cevap;
         std::map<pr::secenekler, pr::celdiriciler> celdiriciler_map;
         int zorluk;
+        bool b = true;
+        bool secildi_mi = false;
 
         public:
         soru(const std::string& soru_konumu_, const pr::secenekler& dogru_cevap_, const std::map<pr::secenekler, pr::celdiriciler>& celdiriciler_map_, const int& zorluk_)
             : soru_konumu(soru_konumu_), dogru_cevap(dogru_cevap_), celdiriciler_map(celdiriciler_map_), zorluk(zorluk_) {}
+        soru(const std::string& soru_konumu_, const pr::secenekler& dogru_cevap_, const std::map<pr::secenekler, pr::celdiriciler>& celdiriciler_map_, const int& zorluk_, const int yanlis_yapilma_sayisi_)
+            : soru_konumu(soru_konumu_), dogru_cevap(dogru_cevap_), celdiriciler_map(celdiriciler_map_), zorluk(zorluk_), yanlis_yapilma_sayisi(yanlis_yapilma_sayisi) {}
+        soru(const bool b_) : b(b_) {}
 
         bool operator<(const soru& diger) const
         {
@@ -67,7 +76,27 @@ namespace pr
             {
                 dosya << celd << " ";
             }
-            dosya << zorluk << std::endl;
+            dosya << zorluk << " " << yanlis_yapilma_sayisi << std::endl;
+        }
+
+        void yanlis_yapildi()
+        {
+            yanlis_yapilma_sayisi++;
+        }
+
+        void secildi()
+        {
+            secildi_mi = true;
+        }
+
+        void soru_konumunu_goster() -> std::string
+        {
+            return soru_konumu;
+        }
+
+        auto dogru_cevabi_goster() -> secenekler
+        {
+            return dogru_cevap;
         }
     };
 
@@ -75,8 +104,10 @@ namespace pr
     {
         std::string konu_ismi;
         std::set<pr::soru> sorular;
+        double konu_puani = 0;
 
         public:
+        konu() {}
         konu(const std::string& konu_ismi_) : konu_ismi(konu_ismi_) {}
         konu(const std::string& konu_ismi_, const std::set<pr::soru>& sorular_) : konu_ismi(konu_ismi_), sorular(sorular_) {}
 
@@ -108,6 +139,40 @@ namespace pr
         bool operator== (const pr::konu& diger) const
         {
             return this -> konu_ismi == diger.konu_ismi;
+        }
+
+        auto rastgele_soru() -> soru
+        {
+            auto sayi_rand = rand() % sorular.size();
+            int i = 0;
+            for (auto sor : sorular)
+            {
+                if (i++ == sayi_rand) 
+                {
+                    return sor;
+                }
+            }
+            return soru(false);
+        }
+
+        auto konu_ismini_goster() -> std::string
+        {
+            return konu_ismi;
+        }
+
+        void konu_puan_islemi(const int dogru_sayisi)
+        {
+            if (dogru_sayisi == 5) // Tam
+            {
+                konu_puani = konu_puani + (5 / (cosh(konu_puani / 5))); // x + 5sech(x/5)
+                return;
+            }
+            else if (dogru_sayisi == 4) return;
+            else
+            {
+                konu_puani = konu_puani + (-5 / (cosh(konu_puani / 5))); // x - 5sech(x/5)
+                return;
+            }
         }
     };
 
@@ -188,7 +253,7 @@ namespace pr
             auto dosya = std::ofstream{"havuzlar.maoh", std::ios::out | std::ios::trunc};
             if (!dosya.is_open()) return false;
 
-            dosya << "MAOH.START-OF-FILE:3.1" << std::endl;
+            dosya << "MAOH.START-OF-FILE:3.2" << std::endl;
             dosya << "HAVUZ-SAYISI: " << havuz_sayisi << std::endl;
             dosya << "HAVUZ-ORANLARI: ";
             oranlari_dosyaya_yaz(oranlar, dosya);
@@ -206,6 +271,39 @@ namespace pr
             return true;
         }
 
+        auto rastgele_soru() -> soru
+        {
+            return rastgele_konu().rastgele_soru();
+        }
+
+        auto rastgele_konu() -> konu
+        {
+            int rand_100 = rand() % 101;
+            int toplam = 0;
+            int secilen_havuz;
+            for (auto [havuz_no, oran] : oranlar)
+            {
+                toplam += oran * 100;
+                if (toplam >= rand_100) 
+                {
+                    secilen_havuz = havuz_no;
+                    break;
+                }
+            }
+            // Rastgele konu secimi
+            int konu_sayisi = havuz_map.at(secilen_havuz).size();
+            int rand_konu_say = rand() % (konu_sayisi);
+            int i = 0;
+            konu secilen_konu;
+            for (auto k : havuz_map.at(secilen_havuz))
+            {
+                if (i++ == rand_konu_say)
+                {
+                    return k;
+                }
+            }
+        }
+
         bool operator== (const havuzlar& diger) const
         {
             return this -> havuz_map == diger.havuz_map;
@@ -214,6 +312,19 @@ namespace pr
         auto maoh_okuma_basarisi() -> bool
         {
             return okuma;
+        }
+
+        void havuz_oran_kontrol()
+        {
+            auto silinen_sayisi = std::erase_if(havuz_map, [](const auto& item) {return item.second.empty();}); // C++20 std.
+            havuz_sayisi -= silinen_sayisi;
+            int s = 0;
+            std::map<int, havuz_tipi> havuzlar_yeni;
+            for (auto [havuz_no, icerik] : havuz_map)
+                havuzlar_yeni.insert({++s, icerik});
+            havuz_map = havuzlar_yeni;
+            oranlar = havuz_orani_belirle(havuz_sayisi);
+            auto b = dosyaya_yaz();
         }
     };
 
@@ -234,7 +345,7 @@ namespace pr
 
         while (dosya >> token)
         {
-            if (token == "MAOH.START-OF-FILE:3.0") continue;
+            if (token == "MAOH.START-OF-FILE:3.2") continue;
             if (token == "MAOH.END-OF-FILE:") break;
 
             else if (token == "HAVUZ-SAYISI:")
@@ -265,9 +376,9 @@ namespace pr
             else if (token == "SORU:")
             {
                 std::string soru_konumu;
-                int dogru, cA, cB, cC, cD, cE, zorluk;
+                int dogru, cA, cB, cC, cD, cE, zorluk, yanlis_yapilma_sayisi;
 
-                dosya >> soru_konumu >> dogru >> cA >> cB >> cC >> cD >> cE >> zorluk;
+                dosya >> soru_konumu >> dogru >> cA >> cB >> cC >> cD >> cE >> zorluk >> yanlis_yapilma_sayisi;
 
                 pr::soru s(
                     soru_konumu,
@@ -279,7 +390,8 @@ namespace pr
                         {pr::D, static_cast<pr::celdiriciler>(cD)},
                         {pr::E, static_cast<pr::celdiriciler>(cE)},
                     },
-                    zorluk
+                    zorluk,
+                    yanlis_yapilma_sayisi
                 );
 
                 auto it = temp_map[aktif_havuz].find(pr::konu(aktif_konu_ismi));
@@ -306,7 +418,7 @@ namespace pr
         return sonuc;
     }
 
-    auto havuz_orani_belirle(const int& havuz_sayisi) -> std::map<int, double>
+    inline auto havuz_orani_belirle(const int& havuz_sayisi) -> std::map<int, double>
     {
         if (havuz_sayisi < 1 || havuz_sayisi > 6) return {};
         switch (havuz_sayisi)
@@ -318,7 +430,7 @@ namespace pr
             case 3:
                 return {{1, 0.6}, {2, 0.25}, {3, 0.15}};
             case 4:
-                return {{1, 0.5}, {2, 0.25}, {3, 0.16}, {4, 0.9}};
+                return {{1, 0.5}, {2, 0.25}, {3, 0.16}, {4, 0.09}};
             case 5:
                 return {{1, 0.5}, {2, 0.25}, {3, 0.12}, {4, 0.08}, {5, 0.05}};
             case 6:
@@ -327,7 +439,7 @@ namespace pr
         return {};
     }
 
-    auto oranlari_dosyaya_yaz(const std::map<int, double>& oranlar, std::ofstream& dosya) -> bool
+    inline auto oranlari_dosyaya_yaz(const std::map<int, double>& oranlar, std::ofstream& dosya) -> bool
     {
         if (!dosya.is_open()) return false;
         for (auto [havuz_no, oran] : oranlar)
@@ -338,4 +450,14 @@ namespace pr
         return true;
     }
 
+    inline auto rastgele_soru(const int soru_sayisi, const havuzlar& havuz_sistemi) -> std::pair<konu, std::map<int, soru>>
+    {
+        std::map<int, soru> verilen_sorular;
+        auto soru_konusu = havuz_sistemi.rastgele_konu();
+        for (int i = 0; i < soru_sayisi; ++i)
+        {
+            verilen_sorular.insert({i + 1, soru_konusu.rastgele_soru()});
+        }
+        return {koru_konusu, verilen_sorular};
+    }
 }
