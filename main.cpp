@@ -35,6 +35,11 @@ int main()
     }
 
     // ASIL PROGRAM
+    if (okuma.soru_sayisini_goster() < 5)
+    {
+        std::cerr << "HATA 1: Soru sayisi cok dusuk. Lutfen havuzlar.maoh dasyasinda en az 5 sorunun bulundugundan emin olunuz." << std::endl;
+        return 1;
+    }
 
     std::cout << "Rastgele soru uretimi basladi. Sorular olusturuluyor . . ." << std::endl;
     auto sorular = rastgele_soru(5, okuma);
