@@ -185,6 +185,7 @@ namespace pr
         int havuz_sayisi;
         std::map<int, double> oranlar;
         bool okuma = true;
+        int soru_sayisi;
 
         public:
         havuzlar(const int& havuz_sayisi_) : havuz_sayisi(havuz_sayisi_)
@@ -328,6 +329,16 @@ namespace pr
             oranlar = havuz_orani_belirle(havuz_sayisi);
             auto b = dosyaya_yaz();
         }
+
+        auto soru_sayisini_goster() -> int
+        {
+            return soru_sayisi;
+        }
+
+        void soru_sayisini_belirle(const int soru_say)
+        {
+            soru_sayisi = soru_say;
+        }
     };
 
     inline auto maoh_okuyucu() -> pr::havuzlar
@@ -344,6 +355,7 @@ namespace pr
         std::string aktif_konu_ismi;
 
         std::map<int, double> oranlar_map;
+        int soru_sayisi = 0;
 
         while (dosya >> token)
         {
@@ -396,6 +408,7 @@ namespace pr
                     zorluk,
                     yanlis_yapilma_sayisi
                 );
+                ++soru_sayisi;
 
                 auto it = temp_map[aktif_havuz].find(pr::konu(aktif_konu_ismi));
                 if (it != temp_map[aktif_havuz].end())
@@ -417,6 +430,8 @@ namespace pr
                 sonuc.konu_ekle(k, no);
             }
         }
+
+        sonuc.soru_sayisini_belirle(soru_sayisi);
 
         return sonuc;
     }
