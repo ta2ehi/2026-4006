@@ -1,6 +1,8 @@
 # 2026-4006
 2026 Tübitak 4006 Bilim Fuarı Projesi: Matematik Öğreniminde Adaptif Öğrenme Yöntemlerinin Uygulanması
 
+**Uygulamayı kullanmak için C++ dosyasını derleyebilir veya releases kısmında yer alan zip dosyasını indirdikten sonra exe içindeki uygulamayı çalıştırabilirsiniz. Uygulamanın çalışabilmesi için tüm dosyayı ayıkladığınızdan emin olunuz.**
+
 ## **yapilar.hpp Dosyası**
 
 Bu header dosyası, ana dosyada kullanılan yapıları oluşturmak için yazılmıştır. Tüm `enum`, `class` ve fonksiyon yapıları; `namespace pr` içine yerleştirilmiştir. Bu dosya yazılırken `C++20` standartları ile C++'a eklenen modern yöntemler kullanılmıştır. Bu sebeple dosyayı `C++20` veya daha yeni C++ standartları kullanarak derlediğinizden emin olunuz.
@@ -57,6 +59,4 @@ Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle 
 
 **_2. Adaptif Öğrenme:_** Uygulamada yer alan her soru için 1-5 arasında (1: Çok kolay, 2: Kolay, 3: Orta, 4: Zor, 5: Çok zor) birer zorluk seviyesi belirlenmiştir. Kullanıcı soruları çözdükçe her konu için bir puanı oluşur. Doğru çözülen sorular puanı artırır, yanlış çözülen sorular ise azaltır. Yeni soruların zorluk seviyesi, puana göre belirlenir. Puanı yüksek olan konulardan sorulacak soruların zorluk seviyeleri daha yüksek olacaktır. Böylelikle kullanıcının zayıf olduğu konularda kolay sorular ile konunun öğrenilmesi sağlanacak, kullanıcının güçlü olduğu konularda ise zor sorular ile mükemmelleşme hedeflenecektir.
 
-Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa o konunun puanına, konunun puanı p olmak üzere f(p) = 5 * sech(p/5) + p donusumu uygulanacaktır. Böylece çok zayıf olan konularda puanın birdenbire artmasının önüne geçilirken ortalama seviyede olunan konularda iyileşildiğinde puanın sıçraması sağlanmıştır. Zaten iyi seviyede olunan konularda ise puanın çok fazla yükselerek konunun kendi kendi devre dışı bırakmasına sebep olmaması için bu tercih yapılmıştır.
-
-_Not: Adaptif öğrenme kısmı henüz taslak aşamasındadır. İlerleyen sürümlerde puanların maoh dosyasına kaydedilmesi ve hesaplanması için kullanılacak kodlar programa dâhil edilecektir._
+Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa o konunun puanına, konunun puanı p olmak üzere f(p) = 5 * sech(p/5) + p donusumu uygulanacaktır. Böylece çok zayıf olan konularda puanın birdenbire artmasının önüne geçilirken ortalama seviyede olunan konularda iyileşildiğinde puanın sıçraması sağlanmıştır. Zaten iyi seviyede olunan konularda ise puanın çok fazla yükselerek konunun kendi kendi devre dışı bırakmasına sebep olmaması için bu tercih yapılmıştır
