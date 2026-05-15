@@ -18,4 +18,4 @@ Versiyon 3.1: Havuz oranlarının dosya sistemine eklenmesi.
 
 Versiyon 3.2: Konu puan sistemi eklendi.
 
-Versiyon 3.3: Soru zorluk adaptasyonu eklendi.
+**Versiyon 3.3: Soru zorluk adaptasyonu eklendi.**
