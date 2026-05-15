@@ -67,20 +67,28 @@ Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa 
 3. En az 1, en çok 100 olacak şekilde rastgele bir tam sayı seç ve bu sayıyı *r* olarak tanımla.
 4. *j* sayısını 0 olarak tanımla.
 5. Tekrarla:
+   
   i. *j* sayısını 1 artır.
+  
   ii. 1.den *j*. havuza kadar olan tüm havuzların rastgelelik oranlarını topla.
+  
   iii. Bu toplam *r*'den küçük veya *r*'ye eşit ise 6. adımdan devam et.
-6. *j* numaralı havuzu seçilen havuz olarak tanımla.
-7. Seçilen havuzdan rastgele bir konu seç ve bu konuyu seçilen konu olarak tanımla.
-8. Seçilen konunun mevcut puanı (*p*) ile *z* değişkenini tanımla: *z = 3 + (p / 3)*. *z < 1* ise *z = 1*, *z > 5* ise *z = 5* tanımla.
-9. Seçilen konunun içinden, zorluk puanı *z*'ye en yakın olan sorulardan rastgele bir tanesini seç ve kullanıcıya sor.
-10. Girilen cevabı kontrol et:
+  
+7. *j* numaralı havuzu seçilen havuz olarak tanımla.
+8. Seçilen havuzdan rastgele bir konu seç ve bu konuyu seçilen konu olarak tanımla.
+9. Seçilen konunun mevcut puanı (*p*) ile *z* değişkenini tanımla: *z = 3 + (p / 3)*. *z < 1* ise *z = 1*, *z > 5* ise *z = 5* tanımla.
+10. Seçilen konunun içinden, zorluk puanı *z*'ye en yakın olan sorulardan rastgele bir tanesini seç ve kullanıcıya sor.
+11. Girilen cevabı kontrol et:
+     
       Cevap doğru:
+    
         i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k + 5 * sech(k / 5)*.
         ii. Seçilen soruyu havuzlar sisteminden kaldır.
         iii. Seçilen konuyu havuzlar sisteminde bir üst havuza taşı. Zaten en üst havuzda ise hiçbir şey yapma.
       Cevap yanlış veya boş:
+    
         i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k - 5 * sech(k / 5)*.
         ii. Seçilen konuyu havuzlar sisteminde bir alt havuza taşı. Zaten en alt havuzda ise hiçbir şey yapma.
         iii. Seçeneğe ait muhtemel çeldiriciyi kullanıcıya göster.
-11. Kullanıcının talebi halinde 3. adıma geri dön.
+    
+12. Kullanıcının talebi halinde 3. adıma geri dön.
