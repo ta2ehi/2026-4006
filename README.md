@@ -60,3 +60,27 @@ Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle 
 **_2. Adaptif Öğrenme:_** Uygulamada yer alan her soru için 1-5 arasında (1: Çok kolay, 2: Kolay, 3: Orta, 4: Zor, 5: Çok zor) birer zorluk seviyesi belirlenmiştir. Kullanıcı soruları çözdükçe her konu için bir puanı oluşur. Doğru çözülen sorular puanı artırır, yanlış çözülen sorular ise azaltır. Yeni soruların zorluk seviyesi, puana göre belirlenir. Puanı yüksek olan konulardan sorulacak soruların zorluk seviyeleri daha yüksek olacaktır. Böylelikle kullanıcının zayıf olduğu konularda kolay sorular ile konunun öğrenilmesi sağlanacak, kullanıcının güçlü olduğu konularda ise zor sorular ile mükemmelleşme hedeflenecektir.
 
 Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa o konunun puanına, konunun puanı p olmak üzere f(p) = 5 * sech(p/5) + p donusumu uygulanacaktır. Böylece çok zayıf olan konularda puanın birdenbire artmasının önüne geçilirken ortalama seviyede olunan konularda iyileşildiğinde puanın sıçraması sağlanmıştır. Zaten iyi seviyede olunan konularda ise puanın çok fazla yükselerek konunun kendi kendi devre dışı bırakmasına sebep olmaması için bu tercih yapılmıştır
+
+### Algoritma:
+1. En üstte havuzlar sistemi, daha sonra sırasıyla havuz, koun ve sorular gelmek üzere hiyerarşik bir yapı oluştur.
+2. Havuzlar sistemindeki *n* havuzu 1'den *n*'e kadar numaralandır.
+3. En az 1, en çok 100 olacak şekilde rastgele bir tam sayı seç ve bu sayıyı *r* olarak tanımla.
+4. *j* sayısını 0 olarak tanımla.
+5. Tekrarla:
+  i. *j* sayısını 1 artır.
+  ii. 1.den *j*. havuza kadar olan tüm havuzların rastgelelik oranlarını topla.
+  iii. Bu toplam *r*'den küçük veya *r*'ye eşit ise 6. adımdan devam et.
+6. *j* numaralı havuzu seçilen havuz olarak tanımla.
+7. Seçilen havuzdan rastgele bir konu seç ve bu konuyu seçilen konu olarak tanımla.
+8. Seçilen konunun mevcut puanı (*p*) ile *z* değişkenini tanımla: *z = 3 + (p / 3)*. *z < 1* ise *z = 1*, *z > 5* ise *z = 5* tanımla.
+9. Seçilen konunun içinden, zorluk puanı *z*'ye en yakın olan sorulardan rastgele bir tanesini seç ve kullanıcıya sor.
+10. Girilen cevabı kontrol et:
+      Cevap doğru:
+        i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k + 5 * sech(k / 5)*.
+        ii. Seçilen soruyu havuzlar sisteminden kaldır.
+        iii. Seçilen konuyu havuzlar sisteminde bir üst havuza taşı. Zaten en üst havuzda ise hiçbir şey yapma.
+      Cevap yanlış veya boş:
+        i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k - 5 * sech(k / 5)*.
+        ii. Seçilen konuyu havuzlar sisteminde bir alt havuza taşı. Zaten en alt havuzda ise hiçbir şey yapma.
+        iii. Seçeneğe ait muhtemel çeldiriciyi kullanıcıya göster.
+11. Kullanıcının talebi halinde 3. adıma geri dön.
