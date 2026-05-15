@@ -67,7 +67,7 @@ Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa 
 3. En az 1, en çok 100 olacak şekilde rastgele bir tam sayı seç ve bu sayıyı *r* olarak tanımla.
 4. *j* sayısını 0 olarak tanımla.
 5. Tekrarla:
-   
+
   i. *j* sayısını 1 artır.
   
   ii. 1.den *j*. havuza kadar olan tüm havuzların rastgelelik oranlarını topla.
@@ -82,13 +82,13 @@ Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa 
      
       Cevap doğru:
     
-        i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k + 5 * sech(k / 5)*.
-        ii. Seçilen soruyu havuzlar sisteminden kaldır.
-        iii. Seçilen konuyu havuzlar sisteminde bir üst havuza taşı. Zaten en üst havuzda ise hiçbir şey yapma.
+     i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k + 5 * sech(k / 5)*.
+    ii. Seçilen soruyu havuzlar sisteminden kaldır.
+    iii. Seçilen konuyu havuzlar sisteminde bir üst havuza taşı. Zaten en üst havuzda ise hiçbir şey yapma.
       Cevap yanlış veya boş:
     
-        i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k - 5 * sech(k / 5)*.
-        ii. Seçilen konuyu havuzlar sisteminde bir alt havuza taşı. Zaten en alt havuzda ise hiçbir şey yapma.
-        iii. Seçeneğe ait muhtemel çeldiriciyi kullanıcıya göster.
+    i. Seçilen konunun puanını (*k*) tekrar tanımla: *k = k - 5 * sech(k / 5)*.
+    ii. Seçilen konuyu havuzlar sisteminde bir alt havuza taşı. Zaten en alt havuzda ise hiçbir şey yapma.
+    iii. Seçeneğe ait muhtemel çeldiriciyi kullanıcıya göster.
     
 12. Kullanıcının talebi halinde 3. adıma geri dön.
