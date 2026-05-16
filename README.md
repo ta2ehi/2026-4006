@@ -62,7 +62,7 @@ Projede amaç, kullanıcının matematik öğrenme deneyiminin en verimli hâle 
 Adaptif öğrenme uygulanırken, sorulacak 5 sorunun tamı doğru cevaplanırsa o konunun puanına, konunun puanı p olmak üzere f(p) = 5 * sech(p/5) + p donusumu uygulanacaktır. Böylece çok zayıf olan konularda puanın birdenbire artmasının önüne geçilirken ortalama seviyede olunan konularda iyileşildiğinde puanın sıçraması sağlanmıştır. Zaten iyi seviyede olunan konularda ise puanın çok fazla yükselerek konunun kendi kendi devre dışı bırakmasına sebep olmaması için bu tercih yapılmıştır
 
 ### Algoritma:
-1. En üstte havuzlar sistemi, daha sonra sırasıyla havuz, koun ve sorular gelmek üzere hiyerarşik bir yapı oluştur.
+1. En üstte havuzlar sistemi, daha sonra sırasıyla havuz, konu ve sorular gelmek üzere hiyerarşik bir yapı oluştur.
 2. Havuzlar sistemindeki *n* havuzu 1'den *n*'e kadar numaralandır.
 3. En az 1, en çok 100 olacak şekilde rastgele bir tam sayı seç ve bu sayıyı *r* olarak tanımla.
 4. *j* sayısını 0 olarak tanımla.
