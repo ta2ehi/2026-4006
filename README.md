@@ -1,5 +1,5 @@
 # 2026-4006
-### 2026 Tübitak 4006 Bilim Fuarı Projesi: Matematik Öğreniminde Adaptif Öğrenme Yöntemlerinin Uygulanması
+### **_2026 Tübitak 4006 Bilim Fuarı Projesi: Matematik Öğreniminde Adaptif Öğrenme Yöntemlerinin Uygulanması_**
 
 **Uygulamayı kullanmak için C++ dosyasını derleyebilir veya releases kısmında yer alan zip dosyasını indirdikten sonra exe içindeki uygulamayı çalıştırabilirsiniz. Uygulamanın çalışabilmesi için tüm dosyayı ayıkladığınızdan emin olunuz.**
 
