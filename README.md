@@ -4,12 +4,17 @@
 **Uygulamayı kullanmak için C++ dosyasını derleyebilir veya releases kısmında yer alan zip dosyasını indirdikten sonra exe içindeki uygulamayı çalıştırabilirsiniz. Uygulamanın çalışabilmesi için tüm dosyayı ayıkladığınızdan emin olunuz.**
 
 **Proje Türü: Tasarım**
+
 **Ana Alanı: Matematik**
+
 **Tematik Konusu: Algoritma Tasarımı ve Uygulamaları**
+
 **Danışman Öğretmen: Sn. Ahmet ALTINOK**
 
 **Hazırlayanlar:**
+
 **Kayra YİĞİTER**
+
 **Yalın İNCE**
 
 ## **yapilar.hpp Dosyası**
