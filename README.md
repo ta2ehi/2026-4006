@@ -3,6 +3,15 @@
 
 **Uygulamayı kullanmak için C++ dosyasını derleyebilir veya releases kısmında yer alan zip dosyasını indirdikten sonra exe içindeki uygulamayı çalıştırabilirsiniz. Uygulamanın çalışabilmesi için tüm dosyayı ayıkladığınızdan emin olunuz.**
 
+**Proje Türü: Tasarım**
+**Ana Alanı: Matematik**
+**Tematik Konusu: Algoritma Tasarımı ve Uygulamaları**
+**Danışman Öğretmen: Sn. Ahmet ALTINOK**
+
+**Hazırlayanlar:**
+**Kayra YİĞİTER**
+**Yalın İNCE**
+
 ## **yapilar.hpp Dosyası**
 
 Bu header dosyası, ana dosyada kullanılan yapıları oluşturmak için yazılmıştır. Tüm `enum`, `class` ve fonksiyon yapıları; `namespace pr` içine yerleştirilmiştir. Bu dosya yazılırken `C++20` standartları ile C++'a eklenen modern yöntemler kullanılmıştır. Bu sebeple dosyayı `C++20` veya daha yeni C++ standartları kullanarak derlediğinizden emin olunuz.
@@ -17,7 +26,7 @@ Daha sonra ayarlanmış havuz sayısı gelir:
 ```
 HAVUZ-SAYISI: 5
 ```
-Daha sonra havuzlar ıçın belirlenmiş oranları gelir:
+Daha sonra havuzlar için belirlenmiş oranları gelir:
 ```
 HAVUZ-ORANLARI: 0.5 0.25 0.12 0.08 0.05
 ```
