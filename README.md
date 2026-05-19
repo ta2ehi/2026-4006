@@ -11,7 +11,7 @@
 
 **Danışman Öğretmen: Sn. Ahmet ALTINOK**
 
-**Hazırlayanlar:**
+**_Hazırlayanlar:_**
 
 **Kayra YİĞİTER**
 
